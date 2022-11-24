@@ -1,66 +1,41 @@
-import SimpleLightbox from "simplelightbox";
+import SimpleLightbox from "simplelightbox"
+import "simplelightbox/dist/simple-lightbox.min.css"
 // Add imports above this line
 import { galleryItems } from './gallery-items';
 // Change code below this line
+
+const galleryContainer = document.querySelector('.gallery');
+createPicturesLibrary(galleryContainer, galleryItems);
 let gallery = new SimpleLightbox('.gallery a');
-// gallery.on('show.simplelightbox', function () {
-// 	// do something…
-// });
-console.log(galleryItems);
 
-const galeryContainer = document.querySelector('.gallery');
-const picturesMarkup = createPicturesLibrary(galleryItems);
-
-galeryContainer.insertAdjacentHTML('beforeend', picturesMarkup);
-
-galeryContainer.addEventListener('click', openModalByClick)
-
-function createPicturesLibrary(galleryItems) {
+function createPicturesLibrary(gallery, galleryItems) {
     return galleryItems.map(({preview, original, description}) => {
-        return `
-            <div class="gallery__item">
-            <a class="gallery__link" href="${original}">
-                <img
-                class="gallery__image"
-                src="${preview}"
-                data-source="${original}"
-                alt="${description}"
-                />
-            </a>
-            </div> 
-        `
-            
-    }).join('')
-    // console.log(pictures)
+            const galleryItem = document.createElement('a');
+            galleryItem.href = original
+            const galleryItemImg = document.createElement("img");
+            galleryItemImg.src = preview
+            galleryItemImg.alt = description
+            galleryItem.appendChild(galleryItemImg)
+            gallery.appendChild(galleryItem);
+        })
 }
 
-function openModalByClick(event) {
-    // const isPictureEl = event.target.classlist.contains('gallery__image')
-    console.log(event.target.nodeName)
+// function openModalByClick(event) {
+//     console.log(event.target.nodeName)
+//     gallery.open(event.target)
+//     if (event.target.nodeName !== "IMG") {
+//         return;
+//     }
 
-    if (event.target.nodeName !== "IMG") {
-        return;
-    }
+//     event.preventDefault();
+//     window.addEventListener("keydown", closeModal)
+// }
 
-     event.preventDefault();
-    const instance = basicLightbox.create(`
-        <div class="modal">
-            <img src="${event.target.dataset.source}" width="800" height="600";
-        </div>
-    `)
+// function closeModal(event) {
+//         console.log(event.code)
 
-    instance.show()
-
-    window.addEventListener("keydown", closeModal)
-
-    function closeModal(event) {
-        console.log(event.code)
-
-        if (event.code === "Escape") {
-            instance.close()
-            window.removeEventListener("keydown", closeModal)
-        }
-        
-    }
-}
+//         if (event.code === "Escape") {
+//             window.removeEventListener("keydown", closeModal)
+//         }
+// }
 
