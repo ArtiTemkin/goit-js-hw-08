@@ -10,7 +10,7 @@ async function openCurrentTime() {
     const currentTime = JSON.parse(currentTimeJson)
 
     const seconds = await player.setCurrentTime(currentTime.seconds)
-    //console.log(seconds)
+    console.log(seconds)
 }
 
 window.onload = function () {
@@ -22,6 +22,6 @@ window.onload = function () {
 player.on("timeupdate", throttle((data) => saveCurrentTime(data),1000)) 
 
 function saveCurrentTime(data) {
-    console.log(data.seconds)
+    // console.log(data.seconds)
     window.localStorage.setItem("videoplayer-current-time", JSON.stringify(data))
 }
